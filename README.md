@@ -60,6 +60,29 @@ cp .env.example .env
 
 Fill in your provider credentials (at least one online provider or one local model endpoint).
 
+Place `.env` in the **repository root** (next to `docker-compose.yml`). If you run `uvicorn` manually, the service still loads that file automatically (it searches repo root, then `service/`, then the current working directory).
+
+For **Alibaba DashScope** (OpenAI-compatible), set:
+
+```env
+ONLINE_MODEL_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+ONLINE_MODEL_NAME=qwen-plus
+ONLINE_MODEL_API_KEY=your-dashscope-api-key
+MODEL_ROUTING_POLICY=quality_first
+```
+
+You can also use `OPENAI_BASE_URL` / `OPENAI_API_KEY` / `OPENAI_MODEL` as aliases when `ONLINE_*` is unset.
+
+### Landing page (promotion site)
+
+A static promo page is available in `web/`:
+
+```bash
+open web/index.html
+```
+
+Or serve it with any static server for deployment.
+
 ### 2) Run locally
 
 ```bash

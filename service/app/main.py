@@ -1,5 +1,8 @@
+import logging
+
 from fastapi import FastAPI, HTTPException
 
+from .config import settings
 from .schemas import (
     ExperimentRequest,
     ExperimentResponse,
@@ -10,8 +13,24 @@ from .schemas import (
 )
 from .orchestrator import ModelOrchestrator
 
+logging.basicConfig(
+    level=getattr(logging, settings.log_level.upper(), logging.INFO),
+    format="%(levelname)s %(name)s %(message)s",
+)
+log = logging.getLogger(__name__)
+
 app = FastAPI(title="CashClaw Sprint1000 Service", version="0.1.0")
 orchestrator = ModelOrchestrator()
+
+
+@app.on_event("startup")
+async def _log_model_config() -> None:
+    log.info(
+        "LLM config: online_base=%s policy=%s online_model=%s (keys from env only)",
+        settings.online_model_base_url,
+        settings.model_routing_policy,
+        settings.online_model_name,
+    )
 
 
 @app.get("/health")

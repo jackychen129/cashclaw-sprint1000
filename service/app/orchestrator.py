@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
 import httpx
 
 from .config import settings
@@ -53,6 +52,20 @@ class ModelOrchestrator:
         url = f"{route.base_url.rstrip('/')}/chat/completions"
         async with httpx.AsyncClient(timeout=self.timeout) as client:
             response = await client.post(url, headers=headers, json=payload)
-            response.raise_for_status()
+            try:
+                response.raise_for_status()
+            except httpx.HTTPStatusError as exc:
+                snippet = (exc.response.text or "")[:800].strip()
+                hint = ""
+                if exc.response.status_code == 401:
+                    hint = (
+                        " Check ONLINE_MODEL_BASE_URL / OPENAI_BASE_URL, "
+                        "ONLINE_MODEL_API_KEY / OPENAI_API_KEY, and ensure .env is in the "
+                        "project root (parent of service/)."
+                    )
+                raise RuntimeError(
+                    f"LLM HTTP {exc.response.status_code} from {route.base_url.rstrip('/')}: "
+                    f"{snippet or exc.response.reason_phrase}{hint}"
+                ) from exc
             data = response.json()
             return data["choices"][0]["message"]["content"]
