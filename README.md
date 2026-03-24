@@ -62,9 +62,29 @@ Fill in your provider credentials (at least one online provider or one local mod
 
 Place `.env` in the **repository root** (next to `docker-compose.yml`). If you run `uvicorn` manually, the service still loads that file automatically (it searches repo root, then `service/`, then the current working directory).
 
-### Zhipu **GLM-4.7** (OpenAI-compatible, BigModel.cn)
+### Alibaba **Bailian Coding Plan** (**百炼 Coding Plan**, GLM-5)
 
-GLM-4.7 is served by **Zhipu AI**, not DashScope. Create an API key in the [BigModel / open platform](https://open.bigmodel.cn/), then set:
+[Coding Plan](https://www.alibabacloud.com/help/zh/model-studio/coding-plan-overview) bundles models such as **GLM-5**, Qwen3.5, Kimi, and MiniMax behind a **subscription** with an OpenAI-compatible HTTP API.
+
+Use the **Coding Plan–specific** API key (`sk-sp-…`) and **Coding Plan base URL** (do **not** mix with pay-as-you-go `sk-…` keys or `dashscope…/compatible-mode` URLs):
+
+| Setup | `ONLINE_MODEL_BASE_URL` |
+| --- | --- |
+| OpenAI-compatible (intl / common doc) | `https://coding-intl.dashscope.aliyuncs.com/v1` |
+| OpenAI-compatible (domestic `coding` host, if your console says so) | `https://coding.dashscope.aliyuncs.com/v1` |
+
+```env
+ONLINE_MODEL_BASE_URL=https://coding-intl.dashscope.aliyuncs.com/v1
+ONLINE_MODEL_NAME=glm-5
+ONLINE_MODEL_API_KEY=your-coding-plan-sk-sp-key
+MODEL_ROUTING_POLICY=online_first
+```
+
+Official docs may restrict how Coding Plan keys may be used (e.g. intended for coding assistants). **Read the latest terms** before routing this backend at high volume.
+
+### Zhipu **GLM** on **BigModel.cn** (not Bailian)
+
+For GLM served directly by Zhipu (e.g. `glm-4.7`), use [open.bigmodel.cn](https://open.bigmodel.cn/) keys and base URL — not Coding Plan:
 
 ```env
 ONLINE_MODEL_BASE_URL=https://open.bigmodel.cn/api/paas/v4
@@ -73,27 +93,24 @@ ONLINE_MODEL_API_KEY=your-zhipu-api-key
 MODEL_ROUTING_POLICY=online_first
 ```
 
-Zhipu and Alibaba Bailian use **different** API keys; you cannot reuse a DashScope key here.
+### Alibaba Model Studio pay-as-you-go (**DashScope** compatible-mode)
 
-### Alibaba Cloud Model Studio (**百炼**, DashScope OpenAI-compatible)
-
-Create an API key in the [Model Studio / 百炼 console](https://bailian.console.aliyun.com/), then set (pick the **base URL for your region**):
+Create an API key in [Model Studio / 百炼](https://bailian.console.aliyun.com/) for **pay-as-you-go** (not Coding Plan), then set:
 
 | Region / doc | `ONLINE_MODEL_BASE_URL` |
 | --- | --- |
-| Coding host (some Bailian / OpenAI-compat setups) | `https://coding.dashscope.aliyuncs.com/v1` |
 | China (Beijing, compatible-mode) | `https://dashscope.aliyuncs.com/compatible-mode/v1` |
 | Singapore | `https://dashscope-intl.aliyuncs.com/compatible-mode/v1` |
 | US (Virginia) | `https://dashscope-us.aliyuncs.com/compatible-mode/v1` |
 
 ```env
-ONLINE_MODEL_BASE_URL=https://coding.dashscope.aliyuncs.com/v1
+ONLINE_MODEL_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
 ONLINE_MODEL_NAME=qwen-plus
 ONLINE_MODEL_API_KEY=your-dashscope-api-key
 MODEL_ROUTING_POLICY=online_first
 ```
 
-Use `online_first` or `quality_first` when you want **all** LLM calls (including `/v1/plan` and `/v1/experiment`) to use the configured online model. Model IDs must match your provider’s OpenAI-compatible documentation.
+Use `online_first` or `quality_first` when you want **all** LLM calls to use the configured online model. Model IDs must match your provider’s OpenAI-compatible documentation.
 
 You can also use `OPENAI_BASE_URL` / `OPENAI_API_KEY` / `OPENAI_MODEL` as aliases when `ONLINE_*` is unset.
 
