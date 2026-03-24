@@ -7,6 +7,17 @@ This project ships with:
 - A deployable orchestration service (local or cloud) that routes tasks across different AI models
 - A feedback loop to evolve strategies from real community outcomes
 
+## Design principle: MMP validation engine
+
+The project is designed as a **Minimum Money Path (MMP) validation engine**:
+- Start from the smallest sellable offer that can close quickly
+- Run short experiments with measurable targets
+- Keep only what improves close rate, delivery speed, or collected revenue
+- Continuously iterate until the $1,000 target is reached
+
+OpenClaw + the orchestration service should behave like a daily execution machine:
+**Hypothesis -> Experiment -> Metrics -> Decision -> Next experiment**.
+
 ## Why this project exists
 
 Most people do not fail because they lack talent; they fail because they lack:
@@ -27,6 +38,8 @@ CashClaw Sprint1000 turns those missing pieces into a reusable stack.
    - Provides endpoints for plan generation and execution
 3. `community/`
    - Templates and process for collecting and integrating GitHub feedback into weekly strategy upgrades
+4. `service /v1/experiment`
+   - Generates one MMP experiment with pass/fail thresholds and next-step rules
 
 ## "Frontier pattern" principles used
 
@@ -73,6 +86,17 @@ curl -X POST http://localhost:8080/v1/plan \
     "hours_per_day": 2,
     "target_usd": 1000,
     "days": 30
+  }'
+```
+
+```bash
+curl -X POST http://localhost:8080/v1/experiment \
+  -H "Content-Type: application/json" \
+  -d '{
+    "current_offer": "48-hour landing page rewrite package",
+    "channel": "cold email",
+    "last_metrics": "20 outreach, 3 replies, 0 closed, 0 USD",
+    "constraint_hours_per_day": 2
   }'
 ```
 

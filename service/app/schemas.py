@@ -14,6 +14,13 @@ class RunRequest(BaseModel):
     quality: str = Field(default="balanced")
 
 
+class ExperimentRequest(BaseModel):
+    current_offer: str = Field(..., min_length=6)
+    channel: str = Field(..., min_length=3)
+    last_metrics: str = Field(..., min_length=5)
+    constraint_hours_per_day: int = Field(..., ge=1, le=12)
+
+
 class LLMResult(BaseModel):
     provider: str
     model: str
@@ -27,4 +34,9 @@ class PlanResponse(BaseModel):
 
 class RunResponse(BaseModel):
     output: str
+    routed_via: str
+
+
+class ExperimentResponse(BaseModel):
+    experiment: str
     routed_via: str

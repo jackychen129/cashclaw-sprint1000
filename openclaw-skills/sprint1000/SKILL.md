@@ -4,6 +4,8 @@
 
 Help a normal user earn the first **$1,000 in 30 days** through legal, ethical, execution-heavy service work using AI leverage.
 
+Primary principle: continuously validate the **Minimum Money Path (MMP)** and converge on what makes money fastest.
+
 ## Operating constraints
 
 - No scams, no fake testimonials, no spam blasts
@@ -25,6 +27,18 @@ Help a normal user earn the first **$1,000 in 30 days** through legal, ethical, 
 4. Handle replies and objections
 5. Deliver paid work with AI-assisted SOPs
 6. Ask for referral or testimonial after delivery
+
+## MMP experiment loop (mandatory)
+
+For every day, OpenClaw must run this strict cycle:
+1. Hypothesis: define one assumption (for example: "Founder pain hook improves reply rate")
+2. Experiment: run one small test in a 24-48 hour window
+3. Metrics: track outreach, reply rate, close rate, and cash collected
+4. Decision:
+   - Scale if metrics pass threshold
+   - Adjust message/offer if partial pass
+   - Replace offer/channel if fail
+5. Next test: create the next smallest test immediately
 
 ## Prompt templates
 
@@ -74,3 +88,4 @@ Then adjust:
 - Channel mix
 - Pricing
 - Fulfillment speed
+- MMP hypothesis backlog priority
