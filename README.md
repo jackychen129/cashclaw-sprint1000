@@ -62,18 +62,28 @@ Fill in your provider credentials (at least one online provider or one local mod
 
 Place `.env` in the **repository root** (next to `docker-compose.yml`). If you run `uvicorn` manually, the service still loads that file automatically (it searches repo root, then `service/`, then the current working directory).
 
-For **Alibaba DashScope** (OpenAI-compatible), set:
+### Alibaba Cloud Model Studio (**百炼**, DashScope OpenAI-compatible)
+
+Create an API key in the [Model Studio / 百炼 console](https://bailian.console.aliyun.com/), then set (pick the **base URL for your region**):
+
+| Region (typical) | `ONLINE_MODEL_BASE_URL` |
+| --- | --- |
+| China (Beijing) | `https://dashscope.aliyuncs.com/compatible-mode/v1` |
+| Singapore | `https://dashscope-intl.aliyuncs.com/compatible-mode/v1` |
+| US (Virginia) | `https://dashscope-us.aliyuncs.com/compatible-mode/v1` |
 
 ```env
 ONLINE_MODEL_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
 ONLINE_MODEL_NAME=qwen-plus
 ONLINE_MODEL_API_KEY=your-dashscope-api-key
-MODEL_ROUTING_POLICY=quality_first
+MODEL_ROUTING_POLICY=online_first
 ```
+
+Use `online_first` or `quality_first` when you want **all** LLM calls (including `/v1/plan` and `/v1/experiment`) to use the configured online model. Model IDs must match the OpenAI-compatible names listed in Alibaba’s documentation for your region.
 
 You can also use `OPENAI_BASE_URL` / `OPENAI_API_KEY` / `OPENAI_MODEL` as aliases when `ONLINE_*` is unset.
 
-**Local Ollama (no API key)** — ensure Ollama is running (`ollama serve`) and a model is pulled, then in `.env`:
+**Local Ollama (optional, no API key)** — ensure Ollama is running (`ollama serve`) and a model is pulled, then in `.env`:
 
 ```env
 LOCAL_MODEL_BASE_URL=http://127.0.0.1:11434/v1
