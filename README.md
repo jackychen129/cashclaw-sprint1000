@@ -62,6 +62,19 @@ Fill in your provider credentials (at least one online provider or one local mod
 
 Place `.env` in the **repository root** (next to `docker-compose.yml`). If you run `uvicorn` manually, the service still loads that file automatically (it searches repo root, then `service/`, then the current working directory).
 
+### Zhipu **GLM-4.7** (OpenAI-compatible, BigModel.cn)
+
+GLM-4.7 is served by **Zhipu AI**, not DashScope. Create an API key in the [BigModel / open platform](https://open.bigmodel.cn/), then set:
+
+```env
+ONLINE_MODEL_BASE_URL=https://open.bigmodel.cn/api/paas/v4
+ONLINE_MODEL_NAME=glm-4.7
+ONLINE_MODEL_API_KEY=your-zhipu-api-key
+MODEL_ROUTING_POLICY=online_first
+```
+
+Zhipu and Alibaba Bailian use **different** API keys; you cannot reuse a DashScope key here.
+
 ### Alibaba Cloud Model Studio (**百炼**, DashScope OpenAI-compatible)
 
 Create an API key in the [Model Studio / 百炼 console](https://bailian.console.aliyun.com/), then set (pick the **base URL for your region**):
@@ -80,7 +93,7 @@ ONLINE_MODEL_API_KEY=your-dashscope-api-key
 MODEL_ROUTING_POLICY=online_first
 ```
 
-Use `online_first` or `quality_first` when you want **all** LLM calls (including `/v1/plan` and `/v1/experiment`) to use the configured online model. Model IDs must match the OpenAI-compatible names listed in Alibaba’s documentation for your region.
+Use `online_first` or `quality_first` when you want **all** LLM calls (including `/v1/plan` and `/v1/experiment`) to use the configured online model. Model IDs must match your provider’s OpenAI-compatible documentation.
 
 You can also use `OPENAI_BASE_URL` / `OPENAI_API_KEY` / `OPENAI_MODEL` as aliases when `ONLINE_*` is unset.
 
