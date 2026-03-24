@@ -70,11 +70,11 @@ Use the **Coding Plan–specific** API key (`sk-sp-…`) and **Coding Plan base 
 
 | Setup | `ONLINE_MODEL_BASE_URL` |
 | --- | --- |
-| OpenAI-compatible (intl / common doc) | `https://coding-intl.dashscope.aliyuncs.com/v1` |
-| OpenAI-compatible (domestic `coding` host, if your console says so) | `https://coding.dashscope.aliyuncs.com/v1` |
+| OpenAI-compatible (domestic `coding` host) | `https://coding.dashscope.aliyuncs.com/v1` |
+| OpenAI-compatible (intl) | `https://coding-intl.dashscope.aliyuncs.com/v1` |
 
 ```env
-ONLINE_MODEL_BASE_URL=https://coding-intl.dashscope.aliyuncs.com/v1
+ONLINE_MODEL_BASE_URL=https://coding.dashscope.aliyuncs.com/v1
 ONLINE_MODEL_NAME=glm-5
 ONLINE_MODEL_API_KEY=your-coding-plan-sk-sp-key
 MODEL_ROUTING_POLICY=online_first
