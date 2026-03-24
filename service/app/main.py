@@ -58,7 +58,10 @@ Use concise bullet points and practical actions.
     try:
         content, routed = await orchestrator.complete(prompt, quality="high")
     except Exception as exc:  # pragma: no cover
-        raise HTTPException(status_code=502, detail=f"Model call failed: {exc}") from exc
+        raise HTTPException(
+            status_code=502,
+            detail=f"Model call failed ({type(exc).__name__}): {exc!s}",
+        ) from exc
     return PlanResponse(plan=content, routed_via=routed)
 
 
@@ -73,7 +76,10 @@ Return a practical output that can be executed today.
     try:
         content, routed = await orchestrator.complete(prompt, quality=req.quality)
     except Exception as exc:  # pragma: no cover
-        raise HTTPException(status_code=502, detail=f"Model call failed: {exc}") from exc
+        raise HTTPException(
+            status_code=502,
+            detail=f"Model call failed ({type(exc).__name__}): {exc!s}",
+        ) from exc
     return RunResponse(output=content, routed_via=routed)
 
 
@@ -98,5 +104,8 @@ Keep it practical and measurable.
     try:
         content, routed = await orchestrator.complete(prompt, quality="high")
     except Exception as exc:  # pragma: no cover
-        raise HTTPException(status_code=502, detail=f"Model call failed: {exc}") from exc
+        raise HTTPException(
+            status_code=502,
+            detail=f"Model call failed ({type(exc).__name__}): {exc!s}",
+        ) from exc
     return ExperimentResponse(experiment=content, routed_via=routed)

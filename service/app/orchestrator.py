@@ -16,7 +16,8 @@ class Route:
 
 class ModelOrchestrator:
     def __init__(self) -> None:
-        self.timeout = 45.0
+        # Local models (e.g. Ollama) often need longer for long prompts like /v1/plan.
+        self.timeout = 120.0
 
     def pick_route(self, quality: str) -> Route:
         policy = settings.model_routing_policy

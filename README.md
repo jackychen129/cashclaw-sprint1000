@@ -73,6 +73,16 @@ MODEL_ROUTING_POLICY=quality_first
 
 You can also use `OPENAI_BASE_URL` / `OPENAI_API_KEY` / `OPENAI_MODEL` as aliases when `ONLINE_*` is unset.
 
+**Local Ollama (no API key)** — ensure Ollama is running (`ollama serve`) and a model is pulled, then in `.env`:
+
+```env
+LOCAL_MODEL_BASE_URL=http://127.0.0.1:11434/v1
+LOCAL_MODEL_NAME=qwen2.5:3b
+MODEL_ROUTING_POLICY=local_first
+```
+
+`POST /v1/plan` can take **60–120 seconds** on small local models; the service uses a 120s upstream timeout.
+
 ### Landing page (promotion site)
 
 A static promo page is available in `web/`:
