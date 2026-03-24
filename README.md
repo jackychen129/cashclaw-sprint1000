@@ -66,14 +66,15 @@ Place `.env` in the **repository root** (next to `docker-compose.yml`). If you r
 
 Create an API key in the [Model Studio / 百炼 console](https://bailian.console.aliyun.com/), then set (pick the **base URL for your region**):
 
-| Region (typical) | `ONLINE_MODEL_BASE_URL` |
+| Region / doc | `ONLINE_MODEL_BASE_URL` |
 | --- | --- |
-| China (Beijing) | `https://dashscope.aliyuncs.com/compatible-mode/v1` |
+| Coding host (some Bailian / OpenAI-compat setups) | `https://coding.dashscope.aliyuncs.com/v1` |
+| China (Beijing, compatible-mode) | `https://dashscope.aliyuncs.com/compatible-mode/v1` |
 | Singapore | `https://dashscope-intl.aliyuncs.com/compatible-mode/v1` |
 | US (Virginia) | `https://dashscope-us.aliyuncs.com/compatible-mode/v1` |
 
 ```env
-ONLINE_MODEL_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+ONLINE_MODEL_BASE_URL=https://coding.dashscope.aliyuncs.com/v1
 ONLINE_MODEL_NAME=qwen-plus
 ONLINE_MODEL_API_KEY=your-dashscope-api-key
 MODEL_ROUTING_POLICY=online_first
