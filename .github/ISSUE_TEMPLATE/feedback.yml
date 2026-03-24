@@ -1,0 +1,56 @@
+name: Sprint feedback
+description: Share outcome-based feedback for playbook optimization
+title: "[feedback] "
+labels: ["playbook"]
+body:
+  - type: dropdown
+    id: feedback_type
+    attributes:
+      label: Feedback type
+      options:
+        - bug
+        - playbook improvement
+        - win report
+        - failure report
+    validations:
+      required: true
+
+  - type: input
+    id: market
+    attributes:
+      label: Market / channel
+      placeholder: e.g. local SMB via cold email
+    validations:
+      required: true
+
+  - type: input
+    id: offer
+    attributes:
+      label: Offer used
+      placeholder: e.g. Landing page copy + setup
+    validations:
+      required: true
+
+  - type: textarea
+    id: actions
+    attributes:
+      label: What you tried
+      description: Include timeline and execution details.
+    validations:
+      required: true
+
+  - type: textarea
+    id: metrics
+    attributes:
+      label: Outcome metrics
+      description: Include outreach count, reply rate, close rate, and revenue.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested improvement
+      description: Be specific and practical.
+    validations:
+      required: true
